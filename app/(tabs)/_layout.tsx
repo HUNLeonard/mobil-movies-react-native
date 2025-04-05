@@ -1,89 +1,66 @@
-import { View, Text } from "react-native";
 import React from "react";
 import { Tabs } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
+import { colors } from "@/constants/colors";
+import TabBarItem from "@/components/TabBarItem";
+import { Pressable, StyleSheet, TouchableWithoutFeedback } from "react-native";
 
 const _layout = () => {
   return (
-    <Tabs>
+    <Tabs
+      screenOptions={{
+
+        tabBarItemStyle: {
+          width: "100%",
+          height: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+        },
+        tabBarStyle: {
+          backgroundColor: colors.dark_200,
+          borderRadius: 50,
+          marginHorizontal: 10,
+          marginVertical: 20,
+          height: 52,
+          position: "absolute",
+          overflow: "hidden",
+          borderWidth: 0,
+          borderColor: colors.dark_200,
+          paddingHorizontal: 10,
+        },
+        headerShown: false,
+        tabBarShowLabel: false,
+
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          headerShown: false,
-          tabBarLabel: "Home",
-          tabBarInactiveTintColor: "gray",
-          tabBarIcon: ({
-            focused,
-            color,
-          }: {
-            focused: boolean;
-            color: string;
-          }) => (
-            <Ionicons
-              name={focused ? "home" : "home-outline"}
-              size={24}
-              color={color}
-            />
+          tabBarIcon: ({ focused }: { focused: boolean }) => (
+            <TabBarItem focused={focused} icon="home" text="Home" />
           ),
         }}
       />
       <Tabs.Screen
         name="search"
         options={{
-          headerShown: false,
-          tabBarLabel: "Search",
-          tabBarIcon: ({
-            focused,
-            color,
-          }: {
-            focused: boolean;
-            color: string;
-          }) => (
-            <Ionicons
-              name={focused ? "search" : "search-outline"}
-              size={24}
-              color={color}
-            />
+          tabBarIcon: ({ focused }: { focused: boolean }) => (
+            <TabBarItem focused={focused} icon="search" text="Search" />
           ),
         }}
       />
       <Tabs.Screen
         name="saved"
         options={{
-          headerShown: false,
-          tabBarLabel: "Saved",
-          tabBarIcon: ({
-            focused,
-            color,
-          }: {
-            focused: boolean;
-            color: string;
-          }) => (
-            <Ionicons
-              name={focused ? "bookmark" : "bookmark-outline"}
-              size={24}
-              color={color}
-            />
+          tabBarIcon: ({ focused }: { focused: boolean }) => (
+            <TabBarItem focused={focused} icon="bookmark" text="Saved" />
           ),
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
-          headerShown: false,
-          tabBarLabel: "Profile",
-          tabBarIcon: ({
-            focused,
-            color,
-          }: {
-            focused: boolean;
-            color: string;
-          }) => (
-            <Ionicons
-              name={focused ? "person" : "person-outline"}
-              size={24}
-              color={color}
-            />
+          tabBarIcon: ({ focused }: { focused: boolean }) => (
+            <TabBarItem focused={focused} icon="person" text="Profile" />
           ),
         }}
       />

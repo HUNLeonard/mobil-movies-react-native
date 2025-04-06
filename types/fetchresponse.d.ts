@@ -1,4 +1,4 @@
-import { posterResolutions } from "@/constants/images";
+import { posterResolutions,backdropResolutions } from "@/constants/images";
 
 type ResponseType ={
   page: number;
@@ -6,5 +6,5 @@ type ResponseType ={
   total_results: number;
   results: Movie[] | TrendingMovie[] | MovieDetails[];
 }
-
 type PosterResolution = typeof posterResolutions[number]
+type BackdropResolution = typeof backdropResolutions[number]

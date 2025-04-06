@@ -1,8 +1,7 @@
 import { colors } from "@/constants/colors";
 import { capitalizer } from "@/libs/utils";
 import { Ionicons } from "@expo/vector-icons";
-import React from "react";
-import { ImageBackground, Pressable, SafeAreaView, Text, TouchableWithoutFeedback, View } from "react-native";
+import { ImageBackground, Text, TouchableOpacity } from "react-native";
 
 type IconType = keyof typeof Ionicons.glyphMap;
 
@@ -17,21 +16,33 @@ export default function TabBarItem({
 }) {
   if (focused) {
     return (
-      <ImageBackground
-        source={require("@/assets/images/highlight.png")}
+      <TouchableOpacity
+        activeOpacity={0.8}
         style={{
+          position: "relative",
           display: "flex",
           flexDirection: "row",
           width: "100%",
           minWidth: 112,
-          height: 56,
-          marginTop: 16,
+          height: 54,
+          marginTop: 12,
           justifyContent: "center",
           alignItems: "center",
           borderRadius: 60,
           overflow: "hidden",
         }}
       >
+        <ImageBackground
+          source={require("@/assets/images/highlight.png")}
+          style={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            width: "100%",
+            height: "100%",
+          }}
+          resizeMode="cover"
+        />
         <Ionicons name={icon} size={24} color={colors.secondary} />
         <Text
           style={{
@@ -43,11 +54,10 @@ export default function TabBarItem({
         >
           {capitalizer(text)}
         </Text>
-      </ImageBackground>
+      </TouchableOpacity>
     );
   }
   return (
-
     <Ionicons
       name={`${icon}` as IconType}
       size={24}
@@ -57,7 +67,7 @@ export default function TabBarItem({
         height: "100%",
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 16,
+        marginTop: 12,
         borderRadius: 60,
       }}
     />

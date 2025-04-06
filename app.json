@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "second-movie",
-    "slug": "second-movie",
+    "name": "The Movie App",
+    "slug": "the-second-movie",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",

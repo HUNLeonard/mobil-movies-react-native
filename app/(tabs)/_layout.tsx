@@ -1,36 +1,33 @@
 import React from "react";
 import { Tabs } from "expo-router";
-import { colors } from "@/constants/colors";
 import TabBarItem from "@/components/TabBarItem";
-import { Pressable, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import { colors } from "@/constants/colors";
 
 const _layout = () => {
   return (
     <Tabs
-      screenOptions={{
-
-        tabBarItemStyle: {
-          width: "100%",
-          height: "100%",
-          justifyContent: "center",
-          alignItems: "center",
-        },
-        tabBarStyle: {
-          backgroundColor: colors.dark_200,
-          borderRadius: 50,
-          marginHorizontal: 10,
-          marginVertical: 20,
-          height: 52,
-          position: "absolute",
-          overflow: "hidden",
-          borderWidth: 0,
-          borderColor: colors.dark_200,
-          paddingHorizontal: 10,
-        },
-        headerShown: false,
-        tabBarShowLabel: false,
-
-      }}
+        screenOptions={{
+            tabBarItemStyle: {
+                width: "100%",
+                height: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+            },
+            tabBarStyle: {
+                backgroundColor: colors.dark_200,
+                borderRadius: 50,
+                marginHorizontal: 10,
+                marginVertical: 20,
+                height: 52,
+                position: "absolute",
+                overflow: "hidden",
+                borderWidth: 0,
+                borderColor: colors.dark_200,
+                paddingHorizontal: 10,
+            },
+            headerShown: false,
+            tabBarShowLabel: false,
+        }}
     >
       <Tabs.Screen
         name="index"

@@ -16,37 +16,77 @@ import MovieLister from "@/components/MovieLister";
 import Logo from "@/components/Logo";
 
 const Index = () => {
-  const { movies, isPending, error, refetch } = useMovieFetch();
+  const {
+    movies: popularMovies,
+    isPending: popularMoviesIsPending,
+    error: popularMoviesError,
+    refetch: refetchPopularMovies,
+  } = useMovieFetch();
+  const {
+    movies: trendingMovies,
+    isPending: trendingMoviesIsPending,
+    error: trendingMoviesError,
+    refetch: refetchTrendingMovies,
+  } = useMovieFetch({trending:true});
   const router = useRouter();
 
   useEffect(() => {
-    refetch();
+    if(!!popularMovies) refetchPopularMovies();
+    if(!!trendingMovies) refetchTrendingMovies();
   }, []);
-  console.log("Movies: " + movies?.length);
 
-  const renderContent = useMemo(
+  const renderTrendingMoviesContent = useMemo(
     () =>
-      error ? (
-        <Text>Error: {error.message}</Text>
-      ) : isPending ? (
+      trendingMoviesError ? (
+        <Text>Error: {trendingMoviesError.message}</Text>
+      ) : trendingMoviesIsPending ? (
         <ActivityIndicator
           size={"large"}
           color={"#0000ff"}
           style={styles.activityIndicator}
         />
       ) : (
-        <View style={styles.searchBarContainer}>
+        <View>
+          <Text style={styles.title}>Trending Movies</Text>
+          <MovieLister
+            movies={trendingMovies.splice(0, 3) as Movie[]}
+            style={{ marginBottom: -24}}
+          />
+        </View>
+      ),
+
+    [trendingMovies, trendingMoviesIsPending, trendingMoviesError]
+  );
+
+  const renderMovies = useMemo(
+    () =>
+      popularMoviesError ? (
+        <Text>Error: {popularMoviesError.message}</Text>
+      ) : popularMoviesIsPending ? (
+        <ActivityIndicator
+          size={"large"}
+          color={"#0000ff"}
+          style={styles.activityIndicator}
+        />
+      ) : (
+        <View style={styles.contentContainer}>
           <SearchBar
             onPress={() => {
               router.push("/search");
             }}
           />
-          <Text style={styles.title}>Latest Movies</Text>
-          <MovieLister movies={movies as Movie[]} contentContainerStyle={{marginBottom: 64}}/>
+          {renderTrendingMoviesContent}
+          <View>
+          <Text style={styles.title}>Popular Movies</Text>
+          <MovieLister
+            movies={popularMovies as Movie[]}
+            contentContainerStyle={{ marginBottom: 64 }}
+          />
+          </View>
         </View>
       ),
 
-    [movies, isPending, error]
+    [popularMovies, popularMoviesIsPending, popularMoviesError]
   );
 
   return (
@@ -57,7 +97,7 @@ const Index = () => {
         contentContainerStyle={styles.scrollViewContent}
       >
         <Logo />
-        {renderContent}
+        {renderMovies}
       </ScrollView>
     </BasicLayout>
   );
@@ -68,11 +108,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
     alignSelf: "center",
   },
-  searchBarContainer: {
-    flex: 1,
-    marginTop: 20,
-  },
-  trendingContainer: {
+  contentContainer: {
     flex: 1,
     marginTop: 20,
   },

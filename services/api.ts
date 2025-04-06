@@ -1,13 +1,18 @@
 import { TMDB_CONFIG } from "@/constants/fetchConfig";
-import {MOVIE_BASE_URL} from "@/constants/url";
+import { MOVIE_BASE_URL } from "@/constants/url";
 import { ResponseType } from "@/types/fetchresponse";
 
-
-export const fetchMovies = async (query?: string, page: number = 1)=> {
+export const fetchMovies = async (
+  trending?: boolean,
+  query?: string,
+  page: number = 1,
+) => {
   try {
-    const endpoint = query
-      ? `${MOVIE_BASE_URL}/search/movie?page=${page}&query=${encodeURIComponent(query)}}`
-      : `${MOVIE_BASE_URL}/discover/movie?page=${page}&sort_by=popularity.desc`;
+    const endpoint = trending
+      ? `${MOVIE_BASE_URL}/trending/movie/week`
+      : query
+        ? `${MOVIE_BASE_URL}/search/movie?page=${page}&query=${encodeURIComponent(query)}`
+        : `${MOVIE_BASE_URL}/discover/movie?page=${page}&sort_by=popularity.desc`;
 
     const response = await fetch(endpoint, TMDB_CONFIG);
     if (!response.ok) {

@@ -8,13 +8,7 @@ const BasicLayout = ({children}: {children: React.ReactNode}) => {
   return (
     <View style={styles.container}>
       <Image source={images.bg} style={styles.bg} />
-      <ScrollView
-        style={styles.scrollView}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollViewContent}
-      >
-        {children}
-      </ScrollView>
+      {children}
     </View>
   );
 };
@@ -25,8 +19,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.primary,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   bg: {
     position: 'absolute',
@@ -34,13 +26,5 @@ const styles = StyleSheet.create({
     width: '100%',
     zIndex: 0
   },
-  scrollView: {
-    width: '100%',
-    height: '100%',
-    paddingHorizontal: 2.5*8,
-  },
-  scrollViewContent: {
-    minHeight: "100%",
-    paddingBottom: 10,
-  },
+ 
 })

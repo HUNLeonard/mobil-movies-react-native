@@ -1,12 +1,19 @@
-import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import React, { useEffect, useMemo } from "react";
-import { useFocusEffect, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { images } from "@/constants/images";
 import SearchBar from "@/components/SearchBar";
 import BasicLayout from "@/components/BasicLayout";
 import useMovieFetch from "@/hooks/useMovieFetch";
-import { FlatList } from "react-native-gesture-handler";
-import LatestMovies from "@/components/LatestMovies";
+import MovieLister from "@/components/MovieLister";
+import Logo from "@/components/Logo";
 
 const Index = () => {
   const { movies, isPending, error, refetch } = useMovieFetch();
@@ -17,57 +24,72 @@ const Index = () => {
   }, []);
   console.log("Movies: " + movies?.length);
 
-  const renderContent = useMemo(() =>
-      error 
-        ? <Text>Error: {error.message}</Text> 
-        : isPending 
-          ? <ActivityIndicator
-              size={"large"}
-              color={"#0000ff"}
-              style={styles.activityIndicator}
-            />
-          :  <View style={styles.searchBarContainer}>
-              <SearchBar
-                onPress={() => {
-                  router.push("/search");
-                  router.setParams({ focuseIn: 1 });
-                }}
-                placeholder="Search for a movie..."
-              />
-              <LatestMovies movies={movies as Movie[]}/>
-            </View>
-          
-      ,[movies, isPending, error]
+  const renderContent = useMemo(
+    () =>
+      error ? (
+        <Text>Error: {error.message}</Text>
+      ) : isPending ? (
+        <ActivityIndicator
+          size={"large"}
+          color={"#0000ff"}
+          style={styles.activityIndicator}
+        />
+      ) : (
+        <View style={styles.searchBarContainer}>
+          <SearchBar
+            onPress={() => {
+              router.push("/search");
+            }}
+          />
+          <Text style={styles.title}>Latest Movies</Text>
+          <MovieLister movies={movies as Movie[]} contentContainerStyle={{marginBottom: 64}}/>
+        </View>
+      ),
+
+    [movies, isPending, error]
   );
 
   return (
     <BasicLayout>
-      <Image source={images.logo2} style={styles.logo} />
-      {renderContent}
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollViewContent}
+      >
+        <Logo />
+        {renderContent}
+      </ScrollView>
     </BasicLayout>
   );
 };
 
 const styles = StyleSheet.create({
-  logo: {
-    width: 6 * 8,
-    height: 5 * 8,
-    resizeMode: "contain",
-    marginTop: 5 * 8,
-    marginBottom: 2.5 * 8,
-    marginHorizontal: "auto",
-  },
   activityIndicator: {
     marginTop: 40,
     alignSelf: "center",
   },
   searchBarContainer: {
     flex: 1,
-    marginTop: 2.5 * 8,
+    marginTop: 20,
   },
   trendingContainer: {
     flex: 1,
-    marginTop: 2.5 * 8,
+    marginTop: 20,
+  },
+  scrollView: {
+    width: "100%",
+    height: "100%",
+    paddingHorizontal: 20,
+  },
+  scrollViewContent: {
+    minHeight: "100%",
+    paddingBottom: 10,
+  },
+  title: {
+    fontSize: 20,
+    color: "white",
+    fontWeight: "bold",
+    marginVertical: 24,
   },
 });
 

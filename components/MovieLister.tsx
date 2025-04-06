@@ -1,41 +1,30 @@
-import { StyleSheet, Text, View } from "react-native";
+import { FlatListProps, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { FlatList } from "react-native-gesture-handler";
 import MovieCard from "./MovieCard";
 
-interface LatestMoviesProps {
+interface MovieListerProps extends Omit<FlatListProps<Movie>, 'data' | 'renderItem' | 'keyExtractor'> {
   movies: Movie[];
+  scrollable?: boolean;
 }
 
-const LatestMovies = ({ movies }: LatestMoviesProps) => {
+const MovieLister = ({ movies, scrollable = false , ...props}: MovieListerProps) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Latest Movies</Text>
       <FlatList
         data={movies}
         renderItem={({ item: movie }) => <MovieCard movie={movie} />}
         keyExtractor={(movie) => movie.id.toString()}
         numColumns={3}
         columnWrapperStyle={styles.columnWrapperStyle}
-        scrollEnabled={false}
+        scrollEnabled={scrollable}
+        {...props}
       />
-    </View>
   );
 };
 
-export default LatestMovies;
+export default MovieLister;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginBottom: 64,
-  },
-  title: {
-    fontSize: 20,
-    color: "white",
-    fontWeight: "bold",
-    marginVertical: 24,
-  },
   columnWrapperStyle: {
     justifyContent: "center",
     marginBottom: 24,

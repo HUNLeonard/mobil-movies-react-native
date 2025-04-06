@@ -5,17 +5,19 @@ import { Ionicons } from "@expo/vector-icons";
 import { useFocusEffect } from "expo-router";
 
 interface SearchBarProps {
+  value?: string;
+  onChange?: (value: string) => void;
   onPress?: () => void;
   placeholder?: string;
   focuseIn?: boolean;
 }
 
-const SearchBar = ({onPress, placeholder = "", focuseIn = false}: SearchBarProps) => {
-  const [searchTerm, setSearchTerm] = useState("");
+const SearchBar = ({ value ="", onChange,onPress, placeholder = "", focuseIn = false}: SearchBarProps) => {
+  const searchFocus = useRef(focuseIn);
   const textInputRef = useRef<TextInput>(null);
 
   useFocusEffect(() => {
-    if (focuseIn && textInputRef.current) {
+    if (searchFocus.current && textInputRef.current) {
       textInputRef.current.focus();
     }
   });
@@ -31,11 +33,11 @@ const SearchBar = ({onPress, placeholder = "", focuseIn = false}: SearchBarProps
       <TextInput
         ref={textInputRef}
         onPress={onPress}
-        placeholder={placeholder || "Search"}
-        value={searchTerm}
-        onChangeText={setSearchTerm}
+        placeholder={placeholder || "Search for a movie..."}
+        value={value}
+        onChangeText={onChange}
         style={styles.searchInput}
-        placeholderTextColor={colors.accent}
+        placeholderTextColor={colors.light_300}
       />
     </View>
   );

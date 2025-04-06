@@ -44,13 +44,13 @@ const MovieCard = ({ movie : {poster_path, id,title,vote_average,release_date} }
       </Text>
       <View style={styles.starContainer}>
         {
-          [...Array(Math.round(vote_average/2))].map((idx)=>{
-            return <Image key={idx} source={images.star} style={{width:16,height:16}}/>
+          [...Array(Math.round(vote_average/2)).keys()].map((_,idx)=>{
+            return <Image key={`Achived star ${id}-${idx}`} source={images.star} style={{width:16,height:16}}/>
           })
         }
         {
-          [...Array(5 - Math.round(vote_average/2))].map((idx)=>{
-            return <Image key={idx} source={images.star} style={{width:16,height:16}} tintColor={colors.light_300}/>
+          [...Array(5 - Math.round(vote_average/2)).keys()].map((_,idx)=>{
+            return <Image key={`Unachived star ${id}-${idx}`} source={images.star} style={{width:16,height:16}} tintColor={colors.light_300}/>
           })
         }
       </View>

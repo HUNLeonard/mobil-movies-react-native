@@ -13,6 +13,7 @@ import { images } from "@/constants/images";
 
 interface MovieCardProps {
   movie: Movie;
+  index?: number;
 }
 
 const MovieCard = ({ movie : {poster_path, id,title,vote_average,release_date} }: MovieCardProps) => {
@@ -34,7 +35,7 @@ const MovieCard = ({ movie : {poster_path, id,title,vote_average,release_date} }
         style={{
           width: "100%",
           aspectRatio: 2 / 3,
-          borderRadius: 10,
+          borderRadius: 4,
           backgroundColor: "gray",
         }}
         resizeMode="cover"
@@ -67,7 +68,7 @@ export default MovieCard;
 const styles = StyleSheet.create({
   container: {
     maxWidth: "31%",
-    borderRadius: 10,
+    borderRadius: 4,
     overflow: "hidden",
     backgroundColor: colors.dark_200,
   },
@@ -102,7 +103,6 @@ const styles = StyleSheet.create({
   cardType: {
     fontSize: 12,
     color: colors.light_300,
-    textTransform: "uppercase",
     fontWeight: "bold",
   },
 });

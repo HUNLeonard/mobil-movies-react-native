@@ -14,6 +14,7 @@ import BasicLayout from "@/components/BasicLayout";
 import useMovieFetch from "@/hooks/useMovieFetch";
 import MovieLister from "@/components/MovieLister";
 import Logo from "@/components/Logo";
+import TrendingMovieCard from "@/components/TrendingMovieCard";
 
 const Index = () => {
   const {
@@ -49,8 +50,11 @@ const Index = () => {
         <View>
           <Text style={styles.title}>Trending Movies</Text>
           <MovieLister
-            movies={trendingMovies.splice(0, 3) as Movie[]}
-            style={{ marginBottom: -24}}
+            movies={trendingMovies.splice(0, 5) as Movie[]}
+            renderItem={TrendingMovieCard}
+            contentContainerStyle={{ paddingLeft: 12 ,gap: 32 }}
+            horizontal
+            scrollEnabled
           />
         </View>
       ),
@@ -81,6 +85,7 @@ const Index = () => {
           <MovieLister
             movies={popularMovies as Movie[]}
             contentContainerStyle={{ marginBottom: 64 }}
+            numColumns={3}
           />
           </View>
         </View>

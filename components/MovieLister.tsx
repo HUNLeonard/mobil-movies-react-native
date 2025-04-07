@@ -1,7 +1,7 @@
 import { FlatListProps, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { FlatList } from "react-native-gesture-handler";
-import MovieCard from "./MovieCard";
+import MovieCard from "./Cards/MovieCard";
 
 interface MovieListerProps extends Omit<FlatListProps<Movie>, 'data' | 'renderItem' | 'keyExtractor'> {
   movies: Movie[];

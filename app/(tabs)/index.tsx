@@ -1,6 +1,5 @@
 import {
   ActivityIndicator,
-  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -8,27 +7,26 @@ import {
 } from "react-native";
 import React, { useEffect, useMemo } from "react";
 import { useRouter } from "expo-router";
-import { images } from "@/constants/images";
 import SearchBar from "@/components/SearchBar";
 import BasicLayout from "@/components/BasicLayout";
 import useMovieFetch from "@/hooks/useMovieFetch";
 import MovieLister from "@/components/MovieLister";
 import Logo from "@/components/Logo";
-import TrendingMovieCard from "@/components/TrendingMovieCard";
+import TrendingMovieCard from "@/components/Cards/TrendingMovieCard";
 
 const Index = () => {
   const {
-    movies: popularMovies,
+    data: popularMovies,
     isPending: popularMoviesIsPending,
     error: popularMoviesError,
     refetch: refetchPopularMovies,
   } = useMovieFetch();
   const {
-    movies: trendingMovies,
+    data: trendingMovies,
     isPending: trendingMoviesIsPending,
     error: trendingMoviesError,
     refetch: refetchTrendingMovies,
-  } = useMovieFetch({ trending: true });
+  } = useMovieFetch<Movie[]>({ trending: true });
   const router = useRouter();
 
   useEffect(() => {
@@ -90,7 +88,7 @@ const Index = () => {
         </View>
       ),
 
-    [popularMovies, popularMoviesIsPending, popularMoviesError]
+    [trendingMovies,popularMovies, popularMoviesIsPending, popularMoviesError]
   );
 
   return (

@@ -18,7 +18,7 @@ import useDebouncedState from "@/hooks/useDebouncedState";
 const search = () => {
   const [query, setQuery] = useState("");
   const debouncedQuery = useDebouncedState(query, 1000);
-  const { movies, isPending, error, refetch } = useMovieFetch({query:debouncedQuery});
+  const { data: movies, isPending, error, refetch } = useMovieFetch({query:debouncedQuery});
 
   const renderSearchLabel = useMemo(() => 
     query.trim().length > 0 ? (

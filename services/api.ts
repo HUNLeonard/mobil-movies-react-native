@@ -2,13 +2,16 @@ import { TMDB_CONFIG } from "@/constants/fetchConfig";
 import { MOVIE_BASE_URL } from "@/constants/url";
 import { ResponseType } from "@/types/fetchresponse";
 
-export const fetchMovies = async (
+export const fetchMovies = async(
+  id?: string,
   trending?: boolean,
   query?: string,
   page: number = 1,
 ) => {
   try {
-    const endpoint = trending
+    const endpoint = id?
+    `${MOVIE_BASE_URL}/movie/${id}`
+    :trending
       ? `${MOVIE_BASE_URL}/trending/movie/week`
       : query
         ? `${MOVIE_BASE_URL}/search/movie?page=${page}&query=${encodeURIComponent(query)}`
@@ -19,11 +22,18 @@ export const fetchMovies = async (
       // @ts-ignore
       throw new Error("Network response was not ok", response.statusText);
     }
+    if (!id){
+      const data = (await response.json()) as ResponseType;
+      return data.results;
+    }
 
-    const data: ResponseType = await response.json();
-    return data.results || [];
+    const data = (await response.json()) as MovieDetails
+    return data;
   } catch (error) {
     console.error("Error while fetching: ", error);
-    return [];
+    if (!id){
+      return [];
+    }
+    return {} as MovieDetails;
   }
 };

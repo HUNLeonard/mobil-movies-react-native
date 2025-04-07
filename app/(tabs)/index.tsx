@@ -28,39 +28,38 @@ const Index = () => {
     isPending: trendingMoviesIsPending,
     error: trendingMoviesError,
     refetch: refetchTrendingMovies,
-  } = useMovieFetch({trending:true});
+  } = useMovieFetch({ trending: true });
   const router = useRouter();
 
   useEffect(() => {
-    if(!!popularMovies) refetchPopularMovies();
-    if(!!trendingMovies) refetchTrendingMovies();
+    if (!!popularMovies) refetchPopularMovies();
+    if (!!trendingMovies) refetchTrendingMovies();
   }, []);
 
-  const renderTrendingMoviesContent = useMemo(
-    () =>
-      trendingMoviesError ? (
-        <Text>Error: {trendingMoviesError.message}</Text>
-      ) : trendingMoviesIsPending ? (
-        <ActivityIndicator
-          size={"large"}
-          color={"#0000ff"}
-          style={styles.activityIndicator}
-        />
-      ) : (
-        <View>
-          <Text style={styles.title}>Trending Movies</Text>
+  const renderTrendingMoviesContent = useMemo(() => {
+    return (
+      <>
+        <Text style={styles.title}>Trending Movies</Text>
+        {trendingMoviesError ? (
+          <Text>Error: {trendingMoviesError.message}</Text>
+        ) : trendingMoviesIsPending ? (
+          <ActivityIndicator
+            size={"large"}
+            color={"#0000ff"}
+            style={styles.activityIndicator}
+          />
+        ) : (
           <MovieLister
             movies={trendingMovies.splice(0, 5) as Movie[]}
             renderItem={TrendingMovieCard}
-            contentContainerStyle={{ paddingLeft: 12 ,gap: 32 }}
+            contentContainerStyle={{ paddingLeft: 12, gap: 32 }}
             horizontal
             scrollEnabled
           />
-        </View>
-      ),
-
-    [trendingMovies, trendingMoviesIsPending, trendingMoviesError]
-  );
+        )}
+      </>
+    );
+  }, [trendingMovies, trendingMoviesIsPending, trendingMoviesError]);
 
   const renderMovies = useMemo(
     () =>
@@ -81,12 +80,12 @@ const Index = () => {
           />
           {renderTrendingMoviesContent}
           <View>
-          <Text style={styles.title}>Popular Movies</Text>
-          <MovieLister
-            movies={popularMovies as Movie[]}
-            contentContainerStyle={{ marginBottom: 64 }}
-            numColumns={3}
-          />
+            <Text style={styles.title}>Popular Movies</Text>
+            <MovieLister
+              movies={popularMovies as Movie[]}
+              contentContainerStyle={{ marginBottom: 64 }}
+              numColumns={3}
+            />
           </View>
         </View>
       ),

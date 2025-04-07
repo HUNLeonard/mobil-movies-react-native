@@ -10,16 +10,14 @@ const _layout = () => {
             tabBarItemStyle: {
                 width: "100%",
                 height: "100%",
-                justifyContent: "center",
-                alignItems: "center",
             },
             tabBarStyle: {
+                position: "absolute",
+                bottom: 24,
                 backgroundColor: colors.dark_200,
                 borderRadius: 50,
                 marginHorizontal: 10,
-                marginVertical: 20,
                 height: 52,
-                position: "absolute",
                 overflow: "hidden",
                 borderWidth: 2,
                 borderTopWidth: 2,

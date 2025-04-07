@@ -11,7 +11,8 @@ export default function useMovieFetch({trending,query,page}:{trending?: boolean,
 
   const {data,isPending,error,refetch} = useQuery({
     queryKey: ["movies",trending,query,page],
-    queryFn: ()=>fetchMovies(trending,query,page)
+    queryFn: ()=>fetchMovies(trending,query,page),
+    retry: 5
   })
 
   return {movies: data || [] ,isPending,error,refetch};
